@@ -1,0 +1,95 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Charts</title>
+    <meta name="description" content="Chart">
+    <meta name="author" content="kitakun">
+
+    <script src="./chart.js"></script>
+    <script src="./chart_data.js"></script>
+    <style>
+        canvas {
+            position: relative;
+            width: calc(100% - 40px);
+            height: 640px;
+            margin: 0 20px;
+            min-height: 640px;
+        }
+    </style>
+</head>
+
+<body>
+    <button name='toggleTheme'>Toggle theme</button>
+
+    <h2>Chart 1</h2>
+    <canvas id="chart1"></canvas>
+
+    <h2>Chart 2</h2>
+    <canvas id="chart2"></canvas>
+
+    <h2>Chart 3</h2>
+    <canvas id="chart3"></canvas>
+
+    <h2>Chart 4</h2>
+    <canvas id="chart4"></canvas>
+
+    <h2>Chart 5</h2>
+    <canvas id="chart5"></canvas>
+
+    <button name='toggleTheme'>Toggle theme</button>
+</body>
+
+<script>
+    window.onload = function () {
+        var currentTheme = 0;
+        var config = {};
+        if (currentTheme == 1) {
+            config.theme = window.ChartThemes.dayTheme;
+        } else {
+            config.theme = window.ChartThemes.nightTheme;
+        }
+
+        var allCharts = [];
+
+        var chart1 = new Chart(document.getElementById('chart1'), { legend: 'Chart 1' });
+        chart1.load(window.testdata[0]);
+        allCharts.push(chart1);
+
+        var chart2 = new Chart(document.getElementById('chart2'), config);
+        chart2.load(window.testdata[1]);
+        allCharts.push(chart2);
+
+        var chart3 = new Chart(document.getElementById('chart3'), config);
+        chart3.load(window.testdata[2]);
+        allCharts.push(chart3);
+
+        var chart4 = new Chart(document.getElementById('chart4'), config);
+        chart4.load(window.testdata[3]);
+        allCharts.push(chart4);
+
+        var chart5 = new Chart(document.getElementById('chart5'), config);
+        chart5.load(window.testdata[4]);
+        allCharts.push(chart5);
+
+        document.getElementsByName('toggleTheme').forEach(function (themeButton) {
+            themeButton.addEventListener("click", function () {
+                if (currentTheme == 1) currentTheme = 0; else currentTheme = 1;
+                if (currentTheme == 1) {
+                    allCharts.forEach(function (chr) {
+                        chr.setTheme(window.ChartThemes.dayTheme);
+                    });
+                } else {
+                    allCharts.forEach(function (chr) {
+                        chr.setTheme(window.ChartThemes.nightTheme);
+                    });
+                }
+            });
+        });
+    };
+</script>
+
+</html>
